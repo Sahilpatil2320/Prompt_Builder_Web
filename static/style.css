@@ -1,0 +1,157 @@
+:root {
+  --bg1: #0f1724;
+  --bg2: #0b3a52;
+  --accent: #00d4ff;
+  --muted: #9fb3c8;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--bg1), var(--bg2));
+  font-family: 'Poppins', sans-serif;
+  color: #e6f7ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+}
+
+.card {
+  width: 100%;
+  max-width: 900px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+.card-header {
+  padding: 24px 32px 0;
+  text-align: center;
+}
+
+.card-header h1 {
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.card-body {
+  padding: 20px 32px 32px;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  margin-top: 12px;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #cceeff;
+}
+
+input[type="text"], select {
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(255, 255, 255, 0.08);
+  color: #e6f7ff;
+  font-size: 1rem;
+}
+
+select option {
+  background: #0f2632;
+  color: #e6f7ff;
+}
+
+.options {
+  margin-top: 15px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 12px;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.btn {
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  border: none;
+  color: var(--accent);
+  background: transparent;
+}
+
+.btn.primary {
+  background: linear-gradient(90deg, var(--accent), #1eaaff);
+  color: #04202a;
+}
+
+.btn.ghost {
+  color: var(--muted);
+}
+
+.result-box {
+  position: relative;
+  margin-top: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.copy-icon {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 1.1rem;
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.copy-icon:hover {
+  color: #0ee564;
+}
+
+pre {
+  white-space: pre-wrap;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: #eafcff;
+}
+
+.chatgpt-logo {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+}
+
+.chatgpt-logo img {
+  width: 25px;
+  height: 25px;
+  transition: transform 0.2s;
+}
+
+.chatgpt-logo img:hover {
+  transform: scale(1.1);
+}
+
+.hidden {
+  display: none;
+}
+
+.card-footer {
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--muted);
+  padding: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}

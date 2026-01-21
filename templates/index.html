@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prompt Builder Pro</title>
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/4712/4712107.png">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="card">
+    <header class="card-header">
+      <h1>🧠 Prompt Builder Pro</h1>
+      <p>Select type → Enter topic → Generate your perfect ChatGPT prompt.</p>
+    </header>
+
+    <main class="card-body">
+      <form method="POST" id="mainForm">
+        <div class="row">
+          <label>Prompt Type</label>
+          <select name="prompt_type" id="promptType" required>
+            <option value="">-- Select --</option>
+            <option value="one_line">One Line Answer</option>
+            <option value="brief">Brief Answer</option>
+            <option value="pointwise">Pointwise Answer</option>
+            <option value="pdf">Create PDF</option>
+            <option value="doc">Create DOC</option>
+            <option value="ppt">Create PPT</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <label>Topic / Question</label>
+          <input type="text" name="topic" id="topic" placeholder="E.g., What are the benefits of AI?" required>
+        </div>
+
+        <div id="optionsPanel" class="options hidden">
+          <div class="row hidden" id="styleRow">
+            <label>Style</label>
+            <select name="style" id="style">
+              <option value="">-- Select Style --</option>
+              <option value="formal">Formal</option>
+              <option value="informal">Informal</option>
+              <option value="creative">Creative</option>
+              <option value="professional">Professional</option>
+            </select>
+          </div>
+
+          <div class="row hidden" id="detailRow">
+            <label>Detail Level</label>
+            <select name="detail" id="detail">
+              <option value="">-- Select Level --</option>
+              <option value="basic">Basic</option>
+              <option value="moderate">Moderate</option>
+              <option value="detailed">Detailed</option>
+            </select>
+          </div>
+
+          <div class="row hidden" id="sectionsRow">
+            <label><input type="checkbox" name="include_sections"> Include sections/headings</label>
+          </div>
+
+          <div class="row actions">
+            <button type="submit" class="btn primary"><i class="fas fa-magic"></i> Generate</button>
+            <button type="button" class="btn ghost" id="clearBtn"><i class="fas fa-eraser"></i> Clear</button>
+          </div>
+        </div>
+      </form>
+
+      {% if prompt %}
+      <section class="result">
+        <div class="result-box">
+          <i class="fas fa-copy copy-icon" onclick="copyText()"></i>
+          <pre id="resultText">{{ prompt }}</pre>
+          <a id="chatBtn" class="chatgpt-logo" target="_blank" title="Open in ChatGPT">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg" alt="ChatGPT">
+          </a>
+        </div>
+      </section>
+      {% endif %}
+    </main>
+
+  </div>
+
+  <script>
+    const promptType = document.getElementById('promptType');
+    const optionsPanel = document.getElementById('optionsPanel');
+    const styleRow = document.getElementById('styleRow');
+    const detailRow = document.getElementById('detailRow');
+    const sectionsRow = document.getElementById('sectionsRow');
+    const clearBtn = document.getElementById('clearBtn');
+
+    function showOptionsFor(type) {
+      styleRow.classList.add('hidden');
+      detailRow.classList.add('hidden');
+      sectionsRow.classList.add('hidden');
+
+      if (!type) {
+        optionsPanel.classList.add('hidden');
+        return;
+      }
+      optionsPanel.classList.remove('hidden');
+
+      if (type === 'brief') {
+        styleRow.classList.remove('hidden');
+        detailRow.classList.remove('hidden');
+      } else if (type === 'pointwise') {
+        detailRow.classList.remove('hidden');
+      } else if (['pdf','doc','ppt'].includes(type)) {
+        detailRow.classList.remove('hidden');
+        sectionsRow.classList.remove('hidden');
+      }
+    }
+
+    promptType.addEventListener('change', e => showOptionsFor(e.target.value));
+    clearBtn.addEventListener('click', () => {
+      document.getElementById('mainForm').reset();
+      showOptionsFor('');
+    });
+
+    function copyText() {
+      const text = document.getElementById('resultText').innerText;
+      navigator.clipboard.writeText(text);
+      alert('Copied to clipboard');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const res = document.getElementById('resultText');
+      const chatBtn = document.getElementById('chatBtn');
+      if (res && chatBtn) {
+        const q = encodeURIComponent(res.innerText);
+        chatBtn.href = 'https://chat.openai.com/?q=' + q;
+      }
+    });
+  </script>
+</body>
+</html>
